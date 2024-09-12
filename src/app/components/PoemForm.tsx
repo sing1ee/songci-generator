@@ -25,6 +25,7 @@ const PoemForm = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setSvgCode("");
 
         const response = await fetch("/api/generate-poem", {
             method: "POST",
@@ -69,7 +70,16 @@ const PoemForm = () => {
             }
 
             const svgData = await response.json();
-            setSvgCode(svgData.svgCode);
+            const svgText = svgData.svgCode;
+            const svgRegex = /<svg[^>]*>([\s\S]*?)<\/svg>/;
+            const match = svgText.match(svgRegex);
+
+            if (match) {
+                const extractedSvg = match[0]; // 提取的完整 <svg> 标签及其内容
+                setSvgCode(extractedSvg);
+            } else {
+                setSvgCode(svgText);
+            }
         } catch (error) {
             console.error("Error generating SVG:", error);
             // Handle error (e.g., show error message to user)
