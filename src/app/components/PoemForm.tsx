@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 const CIPAI_OPTIONS = [
     "水调歌头",
@@ -11,18 +12,38 @@ const CIPAI_OPTIONS = [
     "卜算子",
 ];
 
-export default function PoemForm() {
+const PoemForm = () => {
     const [cipai, setCipai] = useState(CIPAI_OPTIONS[0]);
     const [prompt, setPrompt] = useState("");
     const [poem, setPoem] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // TODO: Implement API call to generate poem
-        // For now, we'll just set a dummy poem
-        setPoem(
-            "This is a generated poem.\nIt will be replaced with actual API call result."
-        );
+
+        const response = await fetch("/api/generate-poem", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ cipai, prompt }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let result = "";
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) {
+                break;
+            }
+            result += decoder.decode(value, { stream: true });
+            setPoem(result);
+        }
     };
 
     const handleGenerateSvg = () => {
@@ -75,7 +96,9 @@ export default function PoemForm() {
             {poem && (
                 <div className="bg-white p-6 rounded-lg shadow-md mb-8">
                     <h2 className="text-2xl font-bold mb-4">生成的宋词</h2>
-                    <pre className="whitespace-pre-wrap">{poem}</pre>
+                    <ReactMarkdown className="whitespace-pre-wrap">
+                        {poem}
+                    </ReactMarkdown>
                     <button
                         onClick={handleGenerateSvg}
                         className="mt-4 bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600"
@@ -86,4 +109,6 @@ export default function PoemForm() {
             )}
         </div>
     );
-}
+};
+
+export default PoemForm;
