@@ -1,5 +1,4 @@
 import PoemForm from "./components/PoemForm";
-import SvgDisplay from "./components/SvgDisplay";
 
 export default function Home() {
     return (
@@ -8,14 +7,7 @@ export default function Home() {
                 <h1 className="text-4xl font-bold">宋词生成器</h1>
             </header>
             <main className="container mx-auto px-4">
-                <div className="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <PoemForm />
-                    </div>
-                    <div>
-                        <SvgDisplay />
-                    </div>
-                </div>
+                <PoemForm />
             </main>
         </div>
     );

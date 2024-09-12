@@ -18,6 +18,9 @@ const PoemForm = () => {
     const [prompt, setPrompt] = useState("");
     const [author, setAuthor] = useState("");
     const [poem, setPoem] = useState("");
+    const [result, setResult] = useState("");
+    const [svgCode, setSvgCode] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -45,11 +48,72 @@ const PoemForm = () => {
             }
             result += decoder.decode(value, { stream: true });
             setPoem(result);
+            setResult(result);
         }
     };
 
-    const handleGenerateSvg = () => {
-        // TODO: Implement SVG generation
+    const handleGenerateSvg = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch("/api/generate-svg", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ result }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to generate SVG");
+            }
+
+            const svgData = await response.json();
+            setSvgCode(svgData.svgCode);
+        } catch (error) {
+            console.error("Error generating SVG:", error);
+            // Handle error (e.g., show error message to user)
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const downloadSvg = () => {
+        const blob = new Blob([svgCode], { type: "image/svg+xml" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "poem.svg";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    const downloadPng = () => {
+        const svg = new Blob([svgCode], {
+            type: "image/svg+xml;charset=utf-8",
+        });
+        const url = URL.createObjectURL(svg);
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            URL.revokeObjectURL(url);
+            canvas.toBlob((blob) => {
+                const pngUrl = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = pngUrl;
+                a.download = "poem.png";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(pngUrl);
+            });
+        };
+        img.src = url;
     };
 
     return (
@@ -118,6 +182,38 @@ const PoemForm = () => {
                     >
                         生成分享图片
                     </button>
+                </div>
+            )}
+
+            {(loading || svgCode) && (
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                    <h2 className="text-2xl font-bold mb-4">分享图片</h2>
+                    {loading ? (
+                        <div className="text-center">
+                            <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+                            <p>生成中...</p>
+                        </div>
+                    ) : svgCode ? (
+                        <div>
+                            <div
+                                dangerouslySetInnerHTML={{ __html: svgCode }}
+                            />
+                            <div className="mt-4 flex justify-center space-x-4">
+                                <button
+                                    onClick={downloadSvg}
+                                    className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                >
+                                    下载 SVG
+                                </button>
+                                <button
+                                    onClick={downloadPng}
+                                    className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-600"
+                                >
+                                    下载 PNG
+                                </button>
+                            </div>
+                        </div>
+                    ) : null}
                 </div>
             )}
         </div>
