@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 const CIPAI_OPTIONS = [
+    "江城子",
     "水调歌头",
     "念奴娇",
     "满江红",
@@ -15,6 +16,7 @@ const CIPAI_OPTIONS = [
 const PoemForm = () => {
     const [cipai, setCipai] = useState(CIPAI_OPTIONS[0]);
     const [prompt, setPrompt] = useState("");
+    const [author, setAuthor] = useState("");
     const [poem, setPoem] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -25,7 +27,7 @@ const PoemForm = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ cipai, prompt }),
+            body: JSON.stringify({ cipai, author, prompt }),
         });
 
         if (!response.ok) {
@@ -72,6 +74,17 @@ const PoemForm = () => {
                             </option>
                         ))}
                     </select>
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="author" className="block mb-2 font-bold">
+                        创作者
+                    </label>
+                    <input
+                        id="author"
+                        value={author}
+                        onChange={(e) => setAuthor(e.target.value)}
+                        className="w-full p-2 border rounded"
+                    />
                 </div>
                 <div className="mb-4">
                     <label htmlFor="prompt" className="block mb-2 font-bold">

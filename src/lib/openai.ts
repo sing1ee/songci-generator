@@ -5,7 +5,7 @@ const openai = new OpenAI({
     baseURL: process.env.LLM_BASE_URL
 });
 
-const model = process.env.LLM_MODEL
+const dmodel = process.env.LLM_MODEL
 
 function checkEnvironmentVariables() {
     if (!process.env.LLM_API_KEY) {
@@ -14,7 +14,7 @@ function checkEnvironmentVariables() {
     if (!process.env.LLM_BASE_URL) {
         throw new Error('LLM_BASE_URL is not set');
     }
-    if (!model) {
+    if (!dmodel) {
         throw new Error('LLM_MODEL is not set');
     }
 }
@@ -22,12 +22,11 @@ function checkEnvironmentVariables() {
 // Call the function to check environment variables
 checkEnvironmentVariables();
 
-export async function generatePoem(cipai: string, prompt: string) {
+export async function generatePoem(system: string, prompt: string) {
     const stream = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
+        model: dmodel,
         messages: [
-            { role: 'system', content: '你是一个宋词生成器。' },
-            { role: 'user', content: `请以"${cipai}"的格式创作一首宋词，内容要求：${prompt}` }
+            { role: 'user', content: `${prompt}` }
         ],
         stream: true,
     });
