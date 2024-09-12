@@ -1,5 +1,4 @@
 import PoemForm from "./components/PoemForm";
-import PoemDisplay from "./components/PoemDisplay";
 import SvgDisplay from "./components/SvgDisplay";
 
 export default function Home() {
@@ -10,9 +9,10 @@ export default function Home() {
             </header>
             <main className="container mx-auto px-4">
                 <div className="grid md:grid-cols-2 gap-8">
-                    <PoemForm />
                     <div>
-                        <PoemDisplay />
+                        <PoemForm />
+                    </div>
+                    <div>
                         <SvgDisplay />
                     </div>
                 </div>
