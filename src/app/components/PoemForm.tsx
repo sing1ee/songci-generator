@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 
-const CIPAI_OPTIONS = ["水调歌头", "念奴娇", "满江红", "蝶恋花"];
+const CIPAI_OPTIONS = [
+    "水调歌头",
+    "念奴娇",
+    "满江红",
+    "蝶恋花",
+    "西江月",
+    "卜算子",
+];
 
 export default function PoemForm() {
     const [cipai, setCipai] = useState(CIPAI_OPTIONS[0]);
