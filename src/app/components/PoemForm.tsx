@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { saveAs } from "file-saver";
 
 const CIPAI_OPTIONS = [
     "江城子",
@@ -90,29 +91,35 @@ const PoemForm = () => {
     };
 
     const downloadPng = () => {
-        const svg = new Blob([svgCode], {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // 创建一个 Image 对象
+        const img = new Image();
+
+        // 将 SVG 转换为 data URL
+        const svgBlob = new Blob([svgCode], {
             type: "image/svg+xml;charset=utf-8",
         });
-        const url = URL.createObjectURL(svg);
-        const img = new Image();
+        const url = URL.createObjectURL(svgBlob);
+
         img.onload = () => {
-            const canvas = document.createElement("canvas");
+            // 设置 canvas 尺寸
             canvas.width = img.width;
             canvas.height = img.height;
-            const ctx = canvas.getContext("2d");
+
+            // 在 canvas 上绘制图像
             ctx.drawImage(img, 0, 0);
-            URL.revokeObjectURL(url);
+
+            // 将 canvas 转换为 PNG 并下载
             canvas.toBlob((blob) => {
-                const pngUrl = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = pngUrl;
-                a.download = "poem.png";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(pngUrl);
+                saveAs(blob, "image.png");
             });
+
+            // 清理
+            URL.revokeObjectURL(url);
         };
+
         img.src = url;
     };
 
