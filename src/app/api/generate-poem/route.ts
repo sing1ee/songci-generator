@@ -257,17 +257,20 @@ const CIPAI_OPTIONS = [
    无意苦争春,一任群芳妒。
    零落成泥碾作尘,只有香如故。` },
 ];
+function getPoemValueByName(name: string): string | undefined {
+    const option = CIPAI_OPTIONS.find(opt => opt.name === name);
+    return option ? option.value : undefined;
+}
 
 export async function POST(req: Request) {
     const { author, cipai, prompt } = await req.json();
-
     const fullPrompt = `你是一个专业的宋词大师，精通作词，尤其是深入研究了宋词的韵律，声调，请按照给定词牌的韵律，字数要求。写一首 ${cipai}
 
 创作者：
 ${author}
 
 参考：
-${CIPAI_OPTIONS[cipai]}
+${getPoemValueByName(cipai)}
 
 要求：
 ${prompt}
@@ -283,6 +286,7 @@ ${prompt}
 
 结果（参考输出格式，不要做任何解析）：
 `
+    console.log(fullPrompt)
     const stream = await generatePoem(cipai, fullPrompt);
 
     const encoder = new TextEncoder();

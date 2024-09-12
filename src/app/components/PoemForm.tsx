@@ -102,7 +102,7 @@ const PoemForm = () => {
             type: "image/svg+xml;charset=utf-8",
         });
         const url = URL.createObjectURL(svgBlob);
-
+        img.src = url;
         img.onload = () => {
             // 设置 canvas 尺寸
             canvas.width = img.width;
@@ -113,14 +113,12 @@ const PoemForm = () => {
 
             // 将 canvas 转换为 PNG 并下载
             canvas.toBlob((blob) => {
-                saveAs(blob, "image.png");
+                saveAs(blob, "peom.png");
             });
 
             // 清理
             URL.revokeObjectURL(url);
         };
-
-        img.src = url;
     };
 
     return (
