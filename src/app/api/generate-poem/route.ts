@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import { generatePoem } from '@/lib/openai';
 
 const CIPAI_OPTIONS = [
-    {
-        name: "江城子",
-        value: `1. 苏轼《江城子·乙卯正月二十日夜记梦》
+   {
+      name: "江城子",
+      value: `1. 苏轼《江城子·乙卯正月二十日夜记梦》
    十年生死两茫茫，不思量，自难忘。
    千里孤坟，无处话凄凉。
    纵使相逢应不识，尘满面，鬓如霜。
@@ -39,9 +39,9 @@ const CIPAI_OPTIONS = [
    酒酣胸胆尚开张，鬓微霜，又何妨？
    持节云中，何日遣冯唐？
    会挽雕弓如满月，西北望，射天狼。`
-    },
-    {
-        name: "水调歌头", value: `1. 苏轼《水调歌头·明月几时有》(中秋)
+   },
+   {
+      name: "水调歌头", value: `1. 苏轼《水调歌头·明月几时有》(中秋)
    明月几时有？把酒问青天。
    不知天上宫阙，今夕是何年。
    我欲乘风归去，又恐琼楼玉宇，高处不胜寒。
@@ -84,8 +84,8 @@ const CIPAI_OPTIONS = [
    谁家玉笛暗飞声，散入春风满洛城。
    此夜曲中闻折柳，何人不起故园情。
    长记当时，自谓骨肉远，咫尺却天涯。` },
-    {
-        name: "念奴娇", value: `1. 苏轼《念奴娇·赤壁怀古》
+   {
+      name: "念奴娇", value: `1. 苏轼《念奴娇·赤壁怀古》
    大江东去，浪淘尽、千古风流人物。
    故垒西边，人道是、三国周郎赤壁。
    乱石穿空，惊涛拍岸，卷起千堆雪。
@@ -128,8 +128,8 @@ const CIPAI_OPTIONS = [
    天涯芳草无归路，旧国家山带夕阳。
    细想前尘，尽黄粱一梦，不如怜取眼前好。
    长歌倚柱，醉倚吴门，红粉长依旧。` },
-    {
-        name: "满江红", value: `1. 岳飞《满江红·怒发冲冠》
+   {
+      name: "满江红", value: `1. 岳飞《满江红·怒发冲冠》
    怒发冲冠,凭栏处、潇潇雨歇。
    抬望眼,仰天长啸,壮怀激烈。
    三十功名尘与土,八千里路云和月。
@@ -169,8 +169,8 @@ const CIPAI_OPTIONS = [
    想汉家,云台乐府,元宵灯火闹。
    而今犹自歌尧舜,沧海桑田转眼过。
    兴废一,今昔之感,英雄泪满襟。` },
-    {
-        name: "蝶恋花", value: `1. 柳永《蝶恋花·伫倚危楼风细细》
+   {
+      name: "蝶恋花", value: `1. 柳永《蝶恋花·伫倚危楼风细细》
    伫倚危楼风细细,望极春愁,黯黯生天际。
    草色烟光残照里,无言谁会凭栏意。
    
@@ -204,8 +204,8 @@ const CIPAI_OPTIONS = [
    
    昨夜西风凋碧树,独上高楼,望尽天涯路。
    欲寄彩笺兼尺素,山长水阔知何处。` },
-    {
-        name: "西江月", value: `1. 苏轼《西江月·世事一场大梦》
+   {
+      name: "西江月", value: `1. 苏轼《西江月·世事一场大梦》
    世事一场大梦,人生几度秋凉。
    夜来风叶已鸣廊,看取眉头鬓上。
    酒贱常愁客少,月明多被云妨。
@@ -228,8 +228,8 @@ const CIPAI_OPTIONS = [
    独坐无人语,空帘不卷烟。
    愁眉收不尽,老泪洒横斜。
    却笑当年事,相逢是梦间。` },
-    {
-        name: "卜算子", value: `1. 苏轼《卜算子·黄州定慧院寓居作》
+   {
+      name: "卜算子", value: `1. 苏轼《卜算子·黄州定慧院寓居作》
    缺月挂疏桐,漏断人初静。
    谁见幽人独往来,缥缈孤鸿影。
 
@@ -258,13 +258,13 @@ const CIPAI_OPTIONS = [
    零落成泥碾作尘,只有香如故。` },
 ];
 function getPoemValueByName(name: string): string | undefined {
-    const option = CIPAI_OPTIONS.find(opt => opt.name === name);
-    return option ? option.value : undefined;
+   const option = CIPAI_OPTIONS.find(opt => opt.name === name);
+   return option ? option.value : undefined;
 }
 
 export async function POST(req: Request) {
-    const { author, cipai, prompt } = await req.json();
-    const fullPrompt = `你是一个专业的宋词大师，精通作词，尤其是深入研究了宋词的韵律，声调，请按照给定词牌的韵律，字数要求。写一首 ${cipai}
+   const { author, cipai, prompt } = await req.json();
+   const fullPrompt = `你是一个专业的宋词大师，精通作词，尤其是深入研究了宋词的韵律，声调，请按照给定词牌的韵律，字数要求。写一首 ${cipai}
 
 创作者：
 ${author}
@@ -276,8 +276,19 @@ ${getPoemValueByName(cipai)}
 ${prompt}
 
 参考输出格式：
-卜算子·咏梅
+词牌·词的主题
+朝代·作者
+正文
+要求：
+词的主题：一般三四个字
+朝代：如果创作者没有提供，则是“当代”
+作者：就是创作者，如果没有提供，是“无名氏”
+正文：根据对词牌的理解，进行合理的分段。
+
+例如：
+卜算子·咏梅（一般三四个字）
 宋·辛弃疾
+
 驿外断桥边,寂寞开无主。
 已是黄昏独自愁,更著风和雨。
 
@@ -286,21 +297,21 @@ ${prompt}
 
 结果（参考输出格式，不要做任何解析）：
 `
-    console.log(fullPrompt)
-    const stream = await generatePoem(cipai, fullPrompt);
+   console.log(fullPrompt)
+   const stream = await generatePoem(cipai, fullPrompt);
 
-    const encoder = new TextEncoder();
-    const readable = new ReadableStream({
-        async start(controller) {
-            for await (const chunk of stream) {
-                const text = chunk.choices[0]?.delta?.content || '';
-                controller.enqueue(encoder.encode(text));
-            }
-            controller.close();
-        },
-    });
+   const encoder = new TextEncoder();
+   const readable = new ReadableStream({
+      async start(controller) {
+         for await (const chunk of stream) {
+            const text = chunk.choices[0]?.delta?.content || '';
+            controller.enqueue(encoder.encode(text));
+         }
+         controller.close();
+      },
+   });
 
-    return new NextResponse(readable, {
-        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-    });
+   return new NextResponse(readable, {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+   });
 }
