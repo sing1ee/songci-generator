@@ -39,7 +39,7 @@ const PoemForm = () => {
             throw new Error("Network response was not ok");
         }
 
-        const reader = response.body.getReader();
+        const reader = response.body!.getReader();
         const decoder = new TextDecoder("utf-8");
         let result = "";
 
@@ -119,11 +119,11 @@ const PoemForm = () => {
             canvas.height = img.height;
 
             // 在 canvas 上绘制图像
-            ctx.drawImage(img, 0, 0);
+            ctx?.drawImage(img, 0, 0);
 
             // 将 canvas 转换为 PNG 并下载
             canvas.toBlob((blob) => {
-                saveAs(blob, "peom.png");
+                saveAs(blob!, "peom.png");
             });
 
             // 清理
