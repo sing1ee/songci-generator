@@ -15,8 +15,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "宋词生成器",
-    description: "AI 驱动的宋词生成器",
+    title: "宋词雅韵",
+    description: "每一个人都是宋词大师",
 };
 
 export default function RootLayout({
