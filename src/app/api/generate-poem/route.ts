@@ -279,7 +279,7 @@ ${prompt}
 
 结果（参考输出格式，不要做任何解析）：
 `
-   console.log(fullPrompt)
+   console.log(prompt)
    const stream = await generatePoem(cipai, fullPrompt);
 
    const encoder = new TextEncoder();
