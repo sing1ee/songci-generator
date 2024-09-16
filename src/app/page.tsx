@@ -8,7 +8,8 @@ export default function Home() {
             </h1>
             <div className="border-4 border-[#8b4513] p-6 rounded-lg">
                 <p className="text-lg mb-6 text-[#5c3317] italic">
-                    "词至宋代，渐成流行，且愈盛愈工。" —— 王国维《人间词话》
+                    &quot;词至宋代，渐成流行，且愈盛愈工。&quot; ——
+                    王国维《人间词话》
                 </p>
                 <PoemForm />
             </div>

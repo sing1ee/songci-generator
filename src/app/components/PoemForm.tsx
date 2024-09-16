@@ -22,35 +22,45 @@ const PoemForm = () => {
     const [result, setResult] = useState("");
     const [svgCode, setSvgCode] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isGeneratingPoem, setIsGeneratingPoem] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSvgCode("");
+        setIsGeneratingPoem(true);
 
-        const response = await fetch("/api/generate-poem", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ cipai, author, prompt }),
-        });
+        try {
+            const response = await fetch("/api/generate-poem", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ cipai, author, prompt }),
+            });
 
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-
-        const reader = response.body!.getReader();
-        const decoder = new TextDecoder("utf-8");
-        let result = "";
-
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) {
-                break;
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
             }
-            result += decoder.decode(value, { stream: true });
-            setPoem(result);
-            setResult(result);
+
+            const reader = response.body!.getReader();
+            const decoder = new TextDecoder("utf-8");
+            let result = "";
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) {
+                    break;
+                }
+                result += decoder.decode(value, { stream: true });
+                setPoem(result);
+                setResult(result);
+            }
+        } catch (error) {
+            console.error("Error generating poem:", error);
+            // Optionally, you can show an error message to the user
+        } finally {
+            setIsGeneratingPoem(false);
         }
     };
 
@@ -89,6 +99,7 @@ const PoemForm = () => {
     };
 
     const uploadArtwork = async () => {
+        setIsUploading(true);
         try {
             const response = await fetch("/api/upload-artwork", {
                 method: "POST",
@@ -109,6 +120,8 @@ const PoemForm = () => {
         } catch (error) {
             console.error("Error uploading artwork:", error);
             // Optionally, you can show an error message to the user
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -203,9 +216,36 @@ const PoemForm = () => {
                 </div>
                 <button
                     type="submit"
-                    className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-600"
+                    className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-600 flex items-center justify-center"
+                    disabled={isGeneratingPoem}
                 >
-                    生成宋词
+                    {isGeneratingPoem ? (
+                        <>
+                            <svg
+                                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                ></circle>
+                                <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                            </svg>
+                            生成中...
+                        </>
+                    ) : (
+                        "开始创作"
+                    )}
                 </button>
             </form>
 
@@ -257,9 +297,36 @@ const PoemForm = () => {
                                 </button>
                                 <button
                                     onClick={uploadArtwork}
-                                    className="bg-green-700 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out"
+                                    className="bg-green-700 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out flex items-center justify-center"
+                                    disabled={isUploading}
                                 >
-                                    上传
+                                    {isUploading ? (
+                                        <>
+                                            <svg
+                                                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <circle
+                                                    className="opacity-25"
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    strokeWidth="4"
+                                                ></circle>
+                                                <path
+                                                    className="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                ></path>
+                                            </svg>
+                                            上传中...
+                                        </>
+                                    ) : (
+                                        "上传"
+                                    )}
                                 </button>
                             </div>
                         </div>
