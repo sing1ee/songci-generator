@@ -1,16 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Database from 'better-sqlite3';
-import path from 'path';
-
-const db = new Database(path.join(process.cwd(), 'artwork.db'));
-
-const getArtworks = db.prepare(`
-    SELECT * FROM artworks
-    ORDER BY createdAt DESC
-    LIMIT ? OFFSET ?
-`);
-
-const getTotalCount = db.prepare('SELECT COUNT(*) as count FROM artworks');
+import { getArtworks, getTotalCount } from '@/lib/db';
 
 export async function GET(request: NextRequest) {
     try {
@@ -19,12 +8,12 @@ export async function GET(request: NextRequest) {
         const offset = parseInt(searchParams.get('offset') || '0', 10);
 
         const artworks = getArtworks.all(limit, offset);
-        const totalCount = getTotalCount.get().count;
+        const totalCount = getTotalCount.get() as { count: number };
 
         return NextResponse.json({
             artworks,
             totalCount,
-            hasMore: offset + limit < totalCount
+            hasMore: offset + limit < totalCount.count
         });
     } catch (error) {
         console.error('Error fetching artworks:', error);

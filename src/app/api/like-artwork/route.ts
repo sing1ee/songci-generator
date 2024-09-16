@@ -1,14 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Database from 'better-sqlite3';
-import path from 'path';
-
-const db = new Database(path.join(process.cwd(), 'artwork.db'));
-
-const incrementLikes = db.prepare(`
-    UPDATE artworks
-    SET likes = likes + 1
-    WHERE id = ?
-`);
+import { incrementLikes } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
     try {
