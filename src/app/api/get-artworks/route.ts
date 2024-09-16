@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
 
         const artworks = getArtworks.all(limit, offset);
         const totalCount = getTotalCount.get() as { count: number };
+        // console.log(artworks, totalCount)
 
         return NextResponse.json({
             artworks,
