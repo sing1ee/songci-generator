@@ -88,6 +88,30 @@ const PoemForm = () => {
         }
     };
 
+    const uploadArtwork = async () => {
+        try {
+            const response = await fetch("/api/upload-artwork", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ svgCode }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || "Failed to upload artwork");
+            }
+
+            const data = await response.json();
+            console.log("Artwork uploaded successfully:", data);
+            // Optionally, you can update the UI or show a success message
+        } catch (error) {
+            console.error("Error uploading artwork:", error);
+            // Optionally, you can show an error message to the user
+        }
+    };
+
     const downloadSvg = () => {
         const blob = new Blob([svgCode], { type: "image/svg+xml" });
         const url = URL.createObjectURL(blob);
@@ -216,15 +240,21 @@ const PoemForm = () => {
                             <div className="mt-4 flex justify-center space-x-4">
                                 <button
                                     onClick={downloadSvg}
-                                    className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    className="bg-blue-700 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"
                                 >
                                     下载 SVG
                                 </button>
                                 <button
                                     onClick={downloadPng}
-                                    className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-600"
+                                    className="bg-purple-700 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-600 transition duration-300 ease-in-out"
                                 >
                                     下载 PNG
+                                </button>
+                                <button
+                                    onClick={uploadArtwork}
+                                    className="bg-green-700 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out"
+                                >
+                                    上传
                                 </button>
                             </div>
                         </div>
