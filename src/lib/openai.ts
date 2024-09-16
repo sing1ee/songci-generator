@@ -29,6 +29,7 @@ export async function generatePoem(system: string, prompt: string) {
             { role: 'user', content: `${prompt}` }
         ],
         stream: true,
+        temperature: 0.9
     });
 
     return stream;
