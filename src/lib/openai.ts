@@ -24,7 +24,7 @@ checkEnvironmentVariables();
 
 export async function generatePoem(system: string, prompt: string) {
     const stream = await openai.chat.completions.create({
-        model: dmodel,
+        model: dmodel as "",
         messages: [
             { role: 'user', content: `${prompt}` }
         ],
@@ -36,7 +36,7 @@ export async function generatePoem(system: string, prompt: string) {
 
 export async function generateSvg(result: string) {
     const completion = await openai.chat.completions.create({
-        model: dmodel,
+        model: dmodel as "",
         messages: [
             { role: 'system', content: '你是一个SVG生成器，能够将宋词转换为优雅的SVG图片。' },
             {
