@@ -145,7 +145,7 @@ const ArtworkWall: React.FC = () => {
                                         ).toLocaleDateString()}
                                     </span>
                                     <div className="space-x-2">
-                                        <button
+                                        {/* <button
                                             onClick={() =>
                                                 handleDownload(
                                                     artwork.svgCode,
@@ -156,7 +156,7 @@ const ArtworkWall: React.FC = () => {
                                             title="下载 SVG"
                                         >
                                             <FaDownload className="inline" />
-                                        </button>
+                                        </button> */}
                                         <button
                                             onClick={() =>
                                                 handleDownload(
