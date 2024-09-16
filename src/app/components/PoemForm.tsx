@@ -236,6 +236,11 @@ const PoemForm = () => {
                         <div>
                             <div
                                 dangerouslySetInnerHTML={{ __html: svgCode }}
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
                             />
                             <div className="mt-4 flex justify-center space-x-4">
                                 <button

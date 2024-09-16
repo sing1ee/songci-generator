@@ -10,7 +10,7 @@ const Navigation = () => {
         <nav className="bg-gray-800 text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
                 <Link href="/" className="text-xl font-bold">
-                    宋词生成器
+                    宋词创作
                 </Link>
                 <div className="space-x-4">
                     <Link
@@ -27,7 +27,7 @@ const Navigation = () => {
                             pathname === "/artwork-wall" ? "underline" : ""
                         }`}
                     >
-                        作品墙
+                        词画长廊
                     </Link>
                 </div>
             </div>

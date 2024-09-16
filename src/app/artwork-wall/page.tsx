@@ -113,7 +113,7 @@ const ArtworkWall: React.FC = () => {
         <div className="min-h-screen bg-[#f5e6d3] text-gray-800 py-8 px-4">
             <div className="max-w-7xl mx-auto">
                 <h1 className="text-4xl font-bold mb-8 text-center text-[#8b4513] font-serif">
-                    诗画长廊
+                    词画长廊
                 </h1>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {artworks.map((artwork) => (

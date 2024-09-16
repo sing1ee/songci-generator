@@ -15,8 +15,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "宋词创作",
-    description: "AI 驱动的宋词创作",
+    title: "宋词生成器",
+    description: "AI 驱动的宋词生成器",
 };
 
 export default function RootLayout({
@@ -27,10 +27,14 @@ export default function RootLayout({
     return (
         <html lang="zh">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f7e8d8] min-h-screen`}
             >
-                <Navigation />
-                <main className="container mx-auto px-4 py-8">{children}</main>
+                <div className="bg-[url('/images/chinese-pattern.png')] bg-repeat min-h-screen">
+                    <Navigation />
+                    <main className="container mx-auto px-4 py-8">
+                        {children}
+                    </main>
+                </div>
             </body>
         </html>
     );
