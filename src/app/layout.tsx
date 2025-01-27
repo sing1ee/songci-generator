@@ -15,31 +15,35 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: {
-        default: 'AI Chat Assistant',
-        template: '%s | AI Chat Assistant'
-    },
-    description: 'An intelligent chat assistant powered by advanced language models',
+    title: "宋词雅韵 - AI 驱动的宋词创作平台",
+    description: "宋词雅韵是一个AI驱动的宋词创作平台，让每个人都能轻松创作优美的宋词。提供智能写作建议、韵律指导和典故推荐，帮助您创作出意境优美的宋词作品。",
     icons: {
-        icon: '/favicon.svg'
+        icon: [
+            {
+                url: '/favicon.svg',
+                type: 'image/svg+xml',
+            }
+        ]
     },
     openGraph: {
-        title: 'AI Chat Assistant',
-        description: 'An intelligent chat assistant powered by advanced language models',
+        title: "宋词雅韵 - AI 驱动的宋词创作平台",
+        description: "让每个人都能创作优美的宋词，AI辅助创作，传承古典文学之美",
+        type: "website",
+        locale: "zh_CN",
         images: [
             {
                 url: '/og-image.svg',
                 width: 1200,
                 height: 630,
-                alt: 'AI Chat Assistant'
+                alt: 'AI Chat',
             }
-        ]
+        ],
     },
     twitter: {
-        card: 'summary_large_image',
-        title: 'AI Chat Assistant',
-        description: 'An intelligent chat assistant powered by advanced language models',
-        images: ['/og-image.svg']
+        card: "summary_large_image",
+        title: "宋词雅韵 - AI 驱动的宋词创作平台",
+        description: "让每个人都能创作优美的宋词，AI辅助创作，传承古典文学之美",
+        images: ["/images/og-image.jpg"],
     },
     viewport: "width=device-width, initial-scale=1",
     robots: {

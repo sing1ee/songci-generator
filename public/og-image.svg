@@ -1,21 +1,4 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- 背景 -->
-  <rect width="1200" height="630" fill="#000000"/>
-  
-  <!-- 渐变装饰 -->
-  <circle cx="1100" cy="100" r="300" fill="url(#gradient)" opacity="0.3"/>
-  
-  <!-- 主标题 -->
-  <text x="100" y="300" font-family="Arial" font-size="72" font-weight="bold" fill="white">AI Chat Assistant</text>
-  
-  <!-- 副标题 -->
-  <text x="100" y="380" font-family="Arial" font-size="36" fill="#888888">Powered by Advanced Language Models</text>
-  
-  <!-- 定义渐变 -->
-  <defs>
-    <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#4F46E5"/>
-      <stop offset="100%" stop-color="#7C3AED"/>
-    </linearGradient>
-  </defs>
+  <rect width="1200" height="630" fill="#09090B"/>
+  <path d="M600 215C607.732 215 614.094 220.98 614.584 228.686L628.571 384.019C629.099 392.199 622.717 399.196 614.537 399.196C606.805 399.196 600.443 393.216 599.953 385.51L585.966 230.177C585.438 221.997 591.82 215 600 215Z" fill="#FAFAFA"/>
 </svg> 
