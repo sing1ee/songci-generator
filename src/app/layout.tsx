@@ -15,8 +15,37 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "宋词雅韵",
-    description: "每一个人都是宋词大师",
+    title: {
+        default: 'AI Chat Assistant',
+        template: '%s | AI Chat Assistant'
+    },
+    description: 'An intelligent chat assistant powered by advanced language models',
+    icons: {
+        icon: '/favicon.svg'
+    },
+    openGraph: {
+        title: 'AI Chat Assistant',
+        description: 'An intelligent chat assistant powered by advanced language models',
+        images: [
+            {
+                url: '/og-image.svg',
+                width: 1200,
+                height: 630,
+                alt: 'AI Chat Assistant'
+            }
+        ]
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'AI Chat Assistant',
+        description: 'An intelligent chat assistant powered by advanced language models',
+        images: ['/og-image.svg']
+    },
+    viewport: "width=device-width, initial-scale=1",
+    robots: {
+        index: true,
+        follow: true,
+    },
 };
 
 export default function RootLayout({
