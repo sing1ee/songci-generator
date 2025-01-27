@@ -28,8 +28,7 @@ export async function generatePoem(system: string, prompt: string) {
         messages: [
             { role: 'user', content: `${prompt}` }
         ],
-        stream: true,
-        temperature: 0.9
+        stream: true
     });
 
     return stream;
@@ -60,8 +59,7 @@ svg 设计规则：
 词：
 ${result}
 结果(只返回 svg 代码)：` }
-        ],
-        temperature: 0.9
+        ]
     });
 
     return completion.choices[0].message.content;
