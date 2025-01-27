@@ -13,6 +13,38 @@ export default function Home() {
                 </p>
                 <PoemForm />
             </div>
+            <div className="mt-8 text-center">
+                <h2 className="text-lg font-semibold text-[#8b4513] mb-4">友情链接</h2>
+                <div className="flex justify-center items-center gap-6">
+                    <a 
+                        href="https://www.deepseek.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 rounded-md border-2 border-[#8b4513] text-[#8b4513] hover:bg-[#8b4513] hover:text-white transition-colors duration-300"
+                    >
+                        Deepseek
+                    </a>
+                    <a 
+                        href="https://deepbolt.xyz/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 rounded-md border-2 border-[#8b4513] text-[#8b4513] hover:bg-[#8b4513] hover:text-white transition-colors duration-300"
+                    >
+                        Deepbolt
+                    </a>
+                </div>
+            </div>
+            <p className="text-sm text-gray-500 text-center mt-4">
+                Powered by{" "}
+                <a 
+                    href="https://www.deepseek.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#8b4513] hover:underline"
+                >
+                    Deepseek R1
+                </a>
+            </p>
         </div>
     );
 }
